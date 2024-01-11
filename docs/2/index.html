@@ -1,0 +1,213 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+<meta name="description" content="">
+<meta name="author" content="ytyaru">
+<link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/deed.ja">
+<link rel="icon" href="asset/image/avator.png">
+<link rel="stylesheet" href="css/style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root {
+    --color:#fff;
+    --background-color:#000;
+    --selection-color:#000;
+    --selection-background-color:#aa0;
+    --caret-color:auto;
+    --outline-color:#fff;
+    --outline-style:solid;
+    --outline-width:2px;
+    --border-color:#fff;
+    --border-style:solid;
+    --border-width:1px;
+
+    --em-style:filled sesame;
+    --em-color:#fff;
+    --a-color:#ff0;
+    --code-color:#fff;
+    --q-color:#fff;
+    --mark-background-color:#ff0;
+    --mark-color:#000;
+
+    --a-selection-color:#ee0;
+    --a-selection-background-color:#00f;
+    --button-focus-color:#000;
+    --button-focus-background-color:#aa0;
+
+    --font-size:max(16px, calc(100vw / 42));
+    --em-style:filled sesame;
+}
+body, textarea, button, select, input {
+    font-family: 'Noto Serif JP', 'Source Han Serif JP', 'Noto Color Emoji', serif; 
+    font-size: var(--font-size);
+    line-height: 1.7em;
+    letter-spacing: 0.05em;
+    color: var(--color);
+    background-color: var(--background-color);
+    caret-color: var(--caret-color);
+}
+table, tr, th, td {
+    border-color: var(--border-color);
+    border-style: var(--border-style);
+    border-width: var(--border-width);
+}
+th {
+    background-color: var(--th-background-color);
+}
+mark {
+    color: var(--mark-color);
+    background-color: var(--mark-background-color);
+}
+::selection {
+    color: var(--selection-color);
+    background-color: var(--selection-background-color);
+    text-shadow: none;
+}
+a::selection {
+    color: var(--a-selection-color);
+    background-color: var(--a-selection-background-color);
+    text-shadow: none;
+}
+button { user-select:none; font-size:var(--font-size); padding:0; margin:0; line-height:1em; letter-spacing:0; word-break:break-word; }
+h1 { font-family: 'Noto Sans JP', 'Source Han Sans JP', 'Noto Color Emoji', sans-serif; }
+em {
+    font-style: normal; /* 非イタリック化 */
+    text-emphasis: var(--em-style) var(--em-color);
+    -webkit-text-emphasis: var(--em-style) var(--em-color);
+}
+a:link, a:visited, a:hover, a:active { color: var(--a-color); }
+
+</style>
+<script>
+(function() {
+class Css {
+    get(key, q) { return getComputedStyle(this.#getEl(q)).getPropertyValue(key) }
+    getInt(key, q) { return parseInt(this.get(key, this.#getEl(q))) }
+    getFloat(key, q) { return parseFloat(this.get(key, this.#getEl(q))) }
+    set(key, value, q) { return this.#getEl(q).style.setProperty(key, value) }
+    #getEl(q) { return document.querySelector(((q) ? q : ':root')) }
+}
+window.Css = new Css()
+})()
+</script>
+
+<script src="js/color-scheme.js"></script>
+<script src="js/main.js"></script>
+</head>
+<body>
+
+<input type="radio" id="night" name="mode" value="night"></input><label for="night" style="user-select:none;cursor:pointer;"><ruby>夜<rt>ナイト</rt></ruby></label>
+<input type="radio" id="noon" name="mode" value="noon"></input><label for="noon" style="user-select:none;cursor:pointer;"><ruby>昼<rt>ヌーン</rt></ruby></label>
+<input type="checkbox" id="is-soft" name="is-soft" value="is-soft"></input><label for="is-soft" style="user-select:none;cursor:pointer;"><ruby>柔<rt>ソフト</rt></ruby></label>
+
+<form id="color-shceme">
+<select id="lightness"><option value="night">🌙</option><option value="noon">☀</option></select>
+<input type="checkbox" id="has-blue" name="hasBlue"></input><label for="has-blue" style="user-select:none;cursor:pointer;"><ruby>青光<rt>ブルーライト</rt></ruby></label>
+</form>
+
+<form id="color-shceme">
+<select id="lightness-4"><option value="night">🌙</option><option value="evening">🌙-</option><option value="morning">☀-</option><option value="noon">☀</option></select>
+<select id="blueness-4"><option value="yellow">yellow</option><option value="yellow-">yellow-</option><option value="blue-">blue-</option><option value="blue">blue</option></select>
+</form>
+
+<!--
+<select id="darkness">
+<option value="dark">🌙</option>
+<option value="light">☀</option>
+</select>
+<select id="blueness">
+<option value="blue">青</option>
+<option value="yellow">黄</option>
+</select>
+-->
+<h1>見出し１</h1>
+<h2>見出し２</h2>
+<h3>見出し３</h3>
+<h4>見出し４</h4>
+<h5 id="h-5">見出し５</h5>
+<h6>見出し６</h6>
+<p>本文。<br><em>強調</em>。<ruby>漢字<rt>かんじ</rt></ruby>。<q>引用文。</q><kbd>Ctrl+C</kbd>。<code>print('Hello');</code><samp>Hello</samp><mark>検索エンジン等からマークされた箇所。</mark><time datetime="2024-01-01T00:00:00+0900" date-type="created|published|updated|scheduled|expireation">2024-01-01</time></p>
+<pre><code data-lang="javascript" data-file-name="hello.js">const message = 'Hello JavaScript !!'
+alert(message);
+</code></pre>
+<blockquote>
+<p>引用文</p>
+<p>引用文</p>
+<cite>引用元（出典・参照先）</cite>
+</blockquote>
+<a href="">外部リンク</a><br>
+<a href="#h-5">内部リンク</a>
+<ol><li>項目１</li><li>項目２</li></ol>
+<ul><li>項目１</li><li>項目２</li></ul>
+<table style="border-collapse:collapse;"><caption>5W1H</caption>
+<tr><th>何を書いたか</th><td>タイトル、見出し、要約</td></tr>
+<tr><th>誰に向けて</th><td>想定している読者（属性（年代、性別、国籍、文化、思想……））</td></tr>
+<tr><th>何のために</th><td>読者は何を得られるか。著者は何を得られるか</td></tr>
+<tr><th>どのくらい</th><td>文字数（読了時間）</td></tr>
+<tr><th>いつ</th><td>公開日時</td></tr>
+<tr><th>どこに所属する</th><td>地域、国籍、言語、所属、文化圏、宗教、思想、イデオロギー…</td></tr>
+<tr><th>誰が</th><td>著者</td></tr>
+<tr><th>どこで</th><td>国籍、場所、言語、所属、文化圏</td></tr>
+<tr><th>どうやって</th><td>使用デバイス・OS・アプリ・知識・技術・情報源</td></tr>
+<tr><th>いくらで</th><td>執筆にかけた時間</td></tr>
+</table>
+
+<details><summary>要約文。</summary>詳細文。</details>
+<address>
+<small>© ytyaru 2024</small><a href="https://website" title="この文書のライセンス">📄</a><a href="https://website" title="著者のサイト">🔗</a><a href="mailto:email@domain.com" title="著者へメールする">✉</a><a href="tel:+14155550132" title="著者へ電話する +1 (415) 555‑0132">📞</a>
+</address>
+<hr>
+<progress id="file" max="100" value="70">70%</progress>
+<meter id="fuel" min="0" max="100" low="33" high="66" optimum="80" value="50">at 50/100</meter>
+<hr>
+<button type="button">ボタン</button>
+<textarea>テキストエリア。</textarea>
+<select><option value="1">値１</option><option value="2">値２</option></select>
+<select>
+<optgroup label="数"><option value="1">１</option><option value="2">２</option></optgroup>
+<optgroup label="字"><option value="one">一</option><option value="two">二</option></optgroup>
+</select>
+<fieldset><legend>input</legend>
+<fieldset><legend>ボタン系</legend>
+<input type="button" value="ボタン"></input>
+<input type="image" src="https://" alt="アイコン"></input>
+<input type="reset" value="リセット"></input>
+<input type="submit" value="送信"></input>
+</fieldset>
+<fieldset><legend>選択系</legend>
+<label for="radio-1">ラジオ値１</label><input id="radio-1" type="radio" name="radio-1" value="radio-val-1"></input>
+<label for="radio-2">ラジオ値２</label><input id="radio-2" type="radio" name="radio-1" value="radio-val-2"></input>
+<label for="check-1">チェック値１</label><input id="check-1" type="checkbox" name="check-1" value="check-val-1"></input>
+<label for="check-2">チェック値２</label><input id="check-2" type="checkbox" name="check-1" value="check-val-2"></input>
+</fieldset>
+<fieldset><legend>テキスト系</legend>
+<input type="text" value="テキスト"></input>
+<input type="password" value="パスワード"></input>
+<input type="email" value="email@addr.com" placeholder="email@addr.com"></input>
+<input type="tel" value="000-0000-0000" placeholder="000-0000-0000"></input>
+<input type="search" value="" placeholder="検索キーワード"></input>
+<input type="url" value="" placeholder="https://"></input>
+<input type="hidden" name="" value=""></input>
+</fieldset>
+<fieldset><legend>数値系</legend>
+<input type="number" value=30 min=0 max=100></input>
+<input type="range" value=30 min=0 max=100></input>
+</fieldset>
+<fieldset><legend>日時系</legend>
+<input type="date"></input>
+<input type="datetime-local"></input>
+<input type="month"></input>
+<input type="time"></input>
+<input type="week"></input>
+</fieldset>
+<fieldset><legend>データ系</legend>
+<input type="file"></input>
+<input type="color"></input>
+</fieldset>
+</fieldset>
+</body>
+</html>
+<!-- https://coliss.com/articles/build-websites/operation/work/html-template-for-web-apps-or-sites.html -->
+<!-- https://coliss.com/articles/build-websites/operation/work/html5-template-for-2018.html -->
