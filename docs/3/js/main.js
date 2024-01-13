@@ -25,6 +25,16 @@ window.addEventListener('DOMContentLoaded', (event) => {
     document.querySelector('#blueness-4').addEventListener('change', (e) => {
     });
     */
+
+    if (sunshine.isSunrizing()) {
+        document.querySelector('#noon').checked = true
+        document.querySelector('#is-soft').checked = true
+        document.querySelector('#has-blue').checked = false
+    } else {
+        document.querySelector('#night').checked = true
+        document.querySelector('#is-soft').checked = true
+        document.querySelector('#has-blue').checked = false
+    }
 });
 window.addEventListener('beforeunload', (event) => {
     console.log('beforeunload!!');

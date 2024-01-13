@@ -1,25 +1,4 @@
 <style>
-:root {
-    --color:#fff;
-    --background-color:#000;
-    --selection-color:#000;
-    --selection-background-color:#aa0;
-    --caret-color:auto;
-    --outline-color:#fff;
-    --outline-style:solid;
-    --outline-width:2px;
-
-    --em-style:filled sesame;
-    --em-color:#fff;
-    --a-color:#ff0;
-    --code-color:#fff;
-    --q-color:#fff;
-
-    --a-selection-color:#ee0;
-    --a-selection-background-color:#00f;
-    --button-focus-color:#000;
-    --button-focus-background-color:#aa0;
-}
 body {
     font-size:max(16px, calc(100vw / 45));
     line-height:1.7em;
@@ -35,6 +14,7 @@ window.addEventListener('DOMContentLoaded', async(event) => {
         'HTML要素',
         '2値（明暗）,4値（青黄）',
         '8値（柔）',
+        '自動設定の試作',
     ]
     
     const { h1, p, ol, li, a, code } = van.tags
