@@ -94,6 +94,7 @@ window.Css = new Css()
 </script>
 <script src="lib/sun-calc/1.9.0/min.js"></script>
 <script src="js/color-scheme.js"></script>
+<script src="js/location.js"></script>
 <script src="js/main.js"></script>
 </head>
 <body>
@@ -101,9 +102,11 @@ window.Css = new Css()
 <input type="radio" id="night" name="mode" value="night"></input><label for="night" style="user-select:none;cursor:pointer;"><ruby>夜<rt>ナイト</rt></ruby></label>
 <input type="radio" id="noon" name="mode" value="noon"></input><label for="noon" style="user-select:none;cursor:pointer;"><ruby>昼<rt>ヌーン</rt></ruby></label>
 <input type="checkbox" id="is-soft" name="is-soft" value="is-soft"></input><label for="is-soft" style="user-select:none;cursor:pointer;"><ruby>柔<rt>ソフト</rt></ruby></label>
-
 <input type="checkbox" id="has-blue" name="hasBlue"></input><label for="has-blue" style="user-select:none;cursor:pointer;"><ruby>青光<rt>ブルーライト</rt></ruby></label>
-
+<br>
+<select id="location-select" title="太陽高度を算出する地点（県庁所在地）"></select>
+<label for="latitude">緯度</label><input id="latitude" type="number" step="0.000001"></input>
+<label for="longitude">経度</label><input id="longitude" type="number" step="0.000001"></input>
 <!--
 <form id="color-shceme">
 <select id="lightness"><option value="night">🌙</option><option value="noon">☀</option></select>

@@ -93,9 +93,14 @@ class Sun {
         if      (dt.getTime() < times.sunriseEnd.getTime()) { return ['sunriseEnd', times] }
         else if (dt.getTime() < times.sunset.getTime()) { return ['sunset', times] }
         else {
-            dt.setDate(dt.getDate() + 1);
-            if      (dt.getTime() < times.sunriseEnd.getTime()) { return ['sunriseEnd', times] }
-            else if (dt.getTime() < times.sunset.getTime()) { return ['sunset', times] }
+            const tomorrow = new Date(dt.getTime() + 1000*60*60*24)
+            const nextTimes = this.times(tomorrow, latitude, longitude)
+            console.log(dt)
+            console.log('dt.getTime():', dt.getTime())
+            console.log(':', nextTimes.sunriseEnd.getTime())
+            console.log(':', nextTimes.sunset.getTime())
+            if      (dt.getTime() < nextTimes.sunriseEnd.getTime()) { return ['sunriseEnd', nextTimes] }
+            else if (dt.getTime() < nextTimes.sunset.getTime()) { return ['sunset', nextTimes] }
             throw new Error('Sun.next()の取得に失敗しました。')
         }
     }
@@ -108,9 +113,9 @@ class Sun {
         return ((re < n) && (n < s))
     }
     get latitude( ) { return this._latitude }
-    set latitude(v) { if (Number.isNumber) { this._latitude = v } }
+    set latitude(v) { if (Number.isFinite(v)) { this._latitude = v } }
     get longitude( ) { return this._longitude }
-    set longitude(v) { if (Number.isNumber) { this._longitude = v } }
+    set longitude(v) { if (Number.isFinite(v)) { this._longitude = v } }
 }
 window.colorScheme = new ColorScheme()
 window.sun = new Sun()
@@ -121,6 +126,8 @@ class AutoMode {
         this._isLock = true // 日没中は黒に固定するか否か
 //        this._isLockNight = true // 日没中は黒に固定するか否か
 //        this._isLockNoon = true // 日中は白に固定するか否か
+        this._isWorkingFn = null
+        this._isLockFn = null
     }
     get isLaunch( ) { return this._isLaunch }
     set isLaunch(v) { this._isLaunch = v }
@@ -140,15 +147,19 @@ class AutoMode {
         if (!this.isWorking) { return }
         const [key, times] = sun.next()
         const t = times[key].getTime() - new Date().getTime()
-        console.log('AutoMode.working():', Math.floor(t/1000/60/60), '時間', Math.floor(t/1000/60), '分後に', key)
-        setTimeout(()=>{this.#setColor((key==='sunriseEnd')); this.working();}, t)
+
+        console.log('AutoMode.working():', this.#msToHms(t), '後に', key)
+        //console.log('AutoMode.working():', Math.floor(t/1000/60/60), '時間', Math.floor((t-(Math.floor(t/1000/60/60)))/1000/60), '分後に', key)
+        if (this._isWorkingFn) { clearTimeout(this._isWorkingFn) }
+        this._isWorkingFn = setTimeout(()=>{this.#setColor((key==='sunriseEnd')); this.working();}, t)
     }
     lock() {
         if (!this.isLock) { return }
         const [key, times] = sun.next()
         const t = times[key].getTime() - new Date().getTime()
         console.log('AutoMode.lock():', Math.floor(t/1000/60/60), '時間', Math.floor(t/1000/60), '分後に', key)
-        //setTimeout(()=>{colorScheme.isLockLight = (key==='sunset'); this.working();}, t) // isLockLightは未実装！
+        //if (this._isLockFn) { clearTimeout(this._isLockFn) }
+        //this._isLockFn = setTimeout(()=>{colorScheme.isLockLight = (key==='sunset'); this.working();}, t) // isLockLightは未実装
     }
     setup() {
         this.launch()
@@ -159,6 +170,12 @@ class AutoMode {
         colorScheme.isLight = isLight
         colorScheme.isSoft = true
         colorScheme.hasBlue = (isLight)
+    }
+    #msToHms(ms) {
+        const h = Math.floor(ms/1000/60/60)
+        const m = Math.floor((ms-(h*1000*60*60))/1000/60)
+        const s = Math.floor((ms-(h*1000*60*60)-(m*1000*60))/1000)
+        return `${h}時間${m}分${s}秒`
     }
 }
 

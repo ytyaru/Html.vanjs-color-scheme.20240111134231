@@ -35,6 +35,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         document.querySelector('#is-soft').checked = true
         document.querySelector('#has-blue').checked = false
     }
+    Location.setup()
 });
 window.addEventListener('beforeunload', (event) => {
     console.log('beforeunload!!');
