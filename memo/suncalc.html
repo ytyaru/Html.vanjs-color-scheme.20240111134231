@@ -1,0 +1,82 @@
+<script src="../docs/4/lib/sun-calc/1.9.0/min.js"></script>
+<script>
+/*
+navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+function successCallback(position){
+    var latitude = position.coords.latitude;
+    var longitude = position.coords.longitude;
+    console.log(latitude, longitude)
+};
+function errorCallback(error){ alert("位置情報が取得できませんでした。"); }
+*/
+window.addEventListener('DOMContentLoaded', (event) => {
+    class D {
+        static ymdhms(d, s1='-', s2=':') { return `${this.ymd(d, s1)} ${this.hms(d, s2)}`; }
+        static ymd(d, s='-') { return `${this.year(d)}${s}${this.month(d)}${s}${this.date(d)}` }
+        static hms(d, s=':') { return `${this.hours(d)}${s}${this.minutes(d)}${s}${this.seconds(d)}` }
+        static year(d) { return this.#pad(d.getFullYear()) }
+        static month(d) { return this.#pad(d.getMonth()+1) }
+        static date(d) { return this.#pad(d.getDate()) }
+        static hours(d) { return this.#pad(d.getHours()) }
+        static minutes(d) { return this.#pad(d.getMinutes()) }
+        static seconds(d) { return this.#pad(d.getSeconds()) }
+        static #pad(i) { return i.toString().padStart(2, '0') }
+    }
+    class AutoMode {
+        constructor(latitude, longitude) {
+            this._latitude = (latitude) ? latitude : 43.06431      // 札幌市の県庁所在地（緯度）
+            this._longitude = (longitude) ? longitude : 141.346879 // 札幌市の県庁所在地（経度）
+        }
+        isLight(dt, latitude, longitude) {
+            if (!dt) { dt = new Date() }
+            if (!latitude) { latitude = this._latitude }
+            if (!longitude) { longitude = this._longitude }
+            return this.#isLight(dt, this.times(dt, latitude, longitude))
+        }
+        times(dt, latitude, longitude) { return SunCalc.getTimes(((dt) ? dt : new Date()), ((latitude) ? latitude : this._latitude), ((longitude) ? longitude : this._longitude)) }
+        #isLight(dt, times) {
+            console.log(dt, times)
+            const n = dt.getTime()
+            const re = times.sunriseEnd.getTime() // 日出（太陽の全てが地平線から現れる時刻）
+            const s = times.sunset.getTime()      // 日入（太陽が地平線にくっつく時刻）
+            return ((re < n) && (n < s))
+        }
+        get latitude( ) { return this._latitude }
+        set latitude(v) { if (Number.isNumber) { this._latitude = v } }
+        get longitude( ) { return this._longitude }
+        set longitude(v) { if (Number.isNumber) { this._longitude = v } }
+    }
+/* https://weblabo.oscasierra.net/javascript-suncalc/
+sunrise	日出時刻 (太陽の頭が地平線から現れる時刻)
+sunriseEnd	日出時刻 (太陽の全てが地平線から現れる時刻)
+goldenHourEnd	朝のゴールデンアワー(マジックアワー)が終了する時刻
+solarNoon	南中時刻 (太陽の高さが一番高い位置にある時刻)
+goldenHour	夕方のゴールデンアワー(マジックアワー)が始まる時刻
+sunsetStart	日没時刻 (太陽が地平線にくっつく時刻)
+sunset	日没時刻 (太陽の全てが地平線に沈む時刻) / 市民薄明開始時刻 (太陽が隠れても外で活動できる時刻)
+dusk	航海薄明開始時刻
+nauticalDusk	天文薄明開始時刻
+night	夜の開始時刻
+nadir	夜の最も暗い時間の開始時刻
+nightEnd	夜の終了時刻
+nauticalDawn	朝の航海薄明開始時刻
+dawn	朝の航海薄明終了時刻
+*/
+    const mode = new AutoMode()
+    console.log()
+    console.log('isLight:', mode.isLight())
+    console.log('times:', mode.times())
+    
+    /*
+    const now = new Date()
+    const [latitude, longitude] = [43.06431, 141.346879] // 札幌市の県庁所在地
+    const times = SunCalc.getTimes(now, latitude, longitude);
+    console.log(times)
+    console.log(Object.keys(times))
+    console.log([...Object.keys(times)].map(k=>D.ymdhms(times[k])))
+    const timeStrs = {}
+    for (let k of Object.keys(times)) { timeStrs[k] = D.ymdhms(times[k]) }
+    console.log(timeStrs)
+    */
+})
+</script>

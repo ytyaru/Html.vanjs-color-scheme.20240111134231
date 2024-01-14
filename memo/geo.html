@@ -1,0 +1,9 @@
+<script>
+navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+function successCallback(position){
+    var latitude = position.coords.latitude;
+    var longitude = position.coords.longitude;
+    console.log(latitude, longitude)
+};
+function errorCallback(error){ alert("位置情報が取得できませんでした。"); }
+</script>
