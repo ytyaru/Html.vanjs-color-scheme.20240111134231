@@ -25,8 +25,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
     document.querySelector('#blueness-4').addEventListener('change', (e) => {
     });
     */
-
-    if (sunshine.isSunrizing()) {
+    colorScheme.setup()
+    if (sun.isRise()) {
         document.querySelector('#noon').checked = true
         document.querySelector('#is-soft').checked = true
         document.querySelector('#has-blue').checked = false
