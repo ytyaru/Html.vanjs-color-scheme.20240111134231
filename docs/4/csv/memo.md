@@ -46,3 +46,10 @@ GeoLite2-ASN-Blocks-IPv4.csv
 GeoLite2-Country-Blocks-IPv4.csv
 GeoLite2-City-Blocks-IPv4.csv
 
+情報源
+　GoogleMap。APIキーなし。クリップボード経由。
+
+* https://wis-labo.com/googlemap/
+* http://www.shurey.com/html/googlemaps.html
+* https://qiita.com/hiron2225/items/8d5cd1b6728b4d63434b
+

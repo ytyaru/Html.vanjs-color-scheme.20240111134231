@@ -1,0 +1,67 @@
+<script>
+window.addEventListener('DOMContentLoaded', (event) => {
+    document.querySelector('#location').addEventListener('paste', (e) => {
+        console.log(e)
+        console.log(e.dataTransfer)
+//        console.log(e.dataTransfer.getData('text'))
+        console.log(e.clipboardData)
+        console.log(e.clipboardData.getData('text'))
+//        e.dataTransfer.getData('text');
+//        e.clipboardData.dataTransfer
+//        e.target.value
+        const [latitude, longitude] = e.clipboardData.getData('text').split(',').map(s=>parseFloat(s.trim()))
+        console.log(latitude, longitude)
+        updateMap(latitude, longitude)
+    })
+    function getLocation() {
+        const [latitude, longitude] = e.clipboardData.getData('text').split(',').map(s=>parseFloat(s.trim()))
+    }
+    function updateMap(latitude, longitude, width=600, height=450) {
+        if (!Number.isFinite(latitude)) { return }
+        if (!Number.isFinite(longitude)) { return }
+        console.log('updateMap()')
+        const iframe = document.querySelector('#google-map')
+//        const iframe = document.createElement('iframe')
+        const src = `https://maps.google.com/maps?output=embed&q=${latitude}, ${longitude}&t=m&hl=ja&z=14`
+        iframe.setAttribute('src', src)
+        iframe.setAttribute('width', `${width}`)
+        iframe.setAttribute('height', `${height}`)
+        iframe.setAttribute('style', 'display:block;border:0;')
+        iframe.setAttribute('allowfullscreen', '')
+        iframe.setAttribute('loading', 'lazy')
+        iframe.setAttribute('referrerpolicy', 'no-referrer-when-downgrade')
+//        return iframe
+    }
+})
+</script>
+<!--
+情報源
+https://wis-labo.com/googlemap/
+http://www.shurey.com/html/googlemaps.html
+https://qiita.com/hiron2225/items/8d5cd1b6728b4d63434b
+-->
+<!-- https://www.google.co.jp/maps/place/%E6%9C%AD%E5%B9%8C%E9%A7%85/@43.0686645,141.3481804,17z/data=!3m1!4b1!4m6!3m5!1s0x5f0b2974d2c3f903:0xa5e2b18cdd4a47a5!8m2!3d43.0686606!4d141.3507553!16zL20vMDZ4MTFj?entry=ttu -->
+<ol>
+<li><a href="https://www.google.com/maps/@?api=1&map_action=map&center=43.06867434996462,141.35075337435606&zoom=15" target="_blank" rel="noopener noreferrer">Google Map</a>にアクセスする</li>
+<li><a href="https://www.google.com/maps/search/?api=1&query=43.06867434996462,141.35075337435606" target="_blank" rel="noopener noreferrer">Google Map</a>にアクセスする</li>
+<!--<li><a href="https://www.google.com/maps/search/?api=1&query=43.06873027715988,141.35076414273547" target="_blank" rel="noopener noreferrer">Google Map</a>にアクセスする</li>-->
+<li><a href="https://www.google.com/maps/search/?api=1&query=札幌駅" target="_blank" rel="noopener noreferrer">Google Map</a>にアクセスする</li>
+<!--<li><a href="https://www.google.com/maps/@43.0762764,141.359695,19.88z?hl=ja&entry=ttu" target="_blank" rel="noopener noreferrer">Google Map</a>にアクセスする</li>-->
+<li>座標を取得したい箇所に移動して右クリックする</li>
+<li>コンテキストメニューの最上に<code>43.06867434996462, 141.35075337435606</code>等の座標が表示される</li>
+<li>クリックすると<samp>クリップボードにコピーしました</samp>と表示される</li>
+<li>アプリに戻って<input id="location" type="text" placeholder="経度,緯度"></input>にペーストする</li>
+</ol>
+<iframe id="google-map" style="display:none;"></iframe>
+
+<!--
+<iframe id="google-map-search" src="https://www.google.com/maps/search/?api=1&query=43.06982755807961%2C141.35073732064447"></iframe>
+-->
+
+<!--
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2914.7053386427524!2d141.34818037664652!3d43.06866449003974!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5f0b2974d2c3f903%3A0xa5e2b18cdd4a47a5!2z5pyt5bmM6aeF!5e0!3m2!1sja!2sjp!4v1705223033330!5m2!1sja!2sjp" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+-->
+<!--
+<iframe src="https://maps.google.com/maps?output=embed&q=43.0761262687363, 141.35980399380438&t=m&hl=ja&z=14" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+-->
+
