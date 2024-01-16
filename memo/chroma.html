@@ -1,0 +1,44 @@
+<script src="../docs/5/lib/chroma/2.4.2/min.js"></script>
+<script>
+window.addEventListener('DOMContentLoaded', (event) => {
+    console.log('DOMContentLoaded!!');
+    //chroma(330, 1, 0.6, 'oklch')
+    //const color = chroma({l:0.5, c:0.9, h:360})
+    //document.body.style.setProperty('background-color', color.hex())
+    for (let elId of ['lightness','chroma','hue']) {
+        document.getElementById(elId).addEventListener('input', (e) => {
+            //const bg = chroma({l:get('lightness', e), c:get('chroma', e), h:get('hue', e)})
+            const bg = chroma(get('lightness', e), get('chroma', e), get('hue', e), 'oklch')
+            //document.body.style.setProperty('background-color', color)
+            set(bg)
+            console.log(bg.hex(), get('lightness', e), get('chroma', e), get('hue', e))
+            set(getFg(bg), 'color')
+            document.getElementById('rgb-hex').value = bg.hex()
+            document.getElementById('lch').value = bg.lch()
+        })
+        document.getElementById(elId).dispatchEvent(new Event('input'))
+    }
+    //function get(id, e) { return (e.target.id === id) ? e.target.value : document.getElementById(id).value }
+    function get(id, e) { return parseFloat((e.target.id === id) ? e.target.value : document.getElementById(id).value) }
+    function set(c, key='background-color') { document.body.style.setProperty(key, c.hex()) }
+    function getFg(bg) {
+        for (let fg of ['black', 'white'].map(n=>chroma(n))) {
+            if (4.5 < chroma.contrast(bg, fg)) { return fg }
+        }
+        console.warn('白黒ともにコントラスト比4.5未満！')
+        return chroma('black')
+    }
+    //document.body.style.setProperty('background-color', color.hex())
+
+});
+</script>
+<label for="lightness">lightness</label><input id="lightness" type="range" min="0" max="1" step="0.01" value="0.5"></input>
+<label for="chroma">chroma</label><input id="chroma" type="range" min="0" max="1" step="0.01" value="0.9"></input>
+<!--<label for="chroma">chroma</label><input id="chroma" type="range" min="0" max="1" step="0.01"></input>-->
+<!--<label for="chroma">chroma</label><input id="chroma" type="range" min="0" max="0.4" step="0.01"></input>-->
+<!--<label for="chroma">chroma</label><input id="chroma" type="range" min="0" max="230" step="1"></input>-->
+<label for="hue">hue</label><input id="hue" type="range" min="0" max="360" step="1" value="360"></input>
+<!--<label for="hue">hue</label><input id="hue" type="range" min="0" max="1" step="0.1" value="1"></input>-->
+<br>
+<label for="rgb-hex">RGB</label><input id="rgb-hex"></input>
+<label for="lch">LCH</label><input id="lch"></input>
